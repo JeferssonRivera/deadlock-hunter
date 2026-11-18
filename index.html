@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deadlock Hunter · Universidad Simón Bolívar</title>
+  <meta name="description" content="Simulador académico de interbloqueos (deadlocks) para Sistemas Operativos — Universidad Simón Bolívar, sede Cúcuta.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css?v=6">
+</head>
+<body>
+  <!--
+    Navegación por vistas: cada opción del menú muestra solo su sección (js/site.js).
+    Ventanas emergentes: los elementos con data-modal="id" abren el contenido de #id.
+    Traducción: data-en (texto), data-en-ph (placeholder), data-en-title (tooltip).
+  -->
+
+  <!-- ===================== NAVEGACIÓN ===================== -->
+  <nav class="nav" id="top">
+    <div class="container nav-inner">
+      <a href="#inicio" class="nav-logo" aria-label="Inicio" data-en-aria="Home">
+        <img src="assets/logo-unisimon.png" alt="Universidad Simón Bolívar">
+      </a>
+      <div class="nav-right">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#inicio" data-en="Home">Inicio</a></li>
+          <li><a href="#simulador" data-en="Simulator">Simulador</a></li>
+          <li><a href="#teoria" data-en="How it works">¿Cómo funciona?</a></li>
+          <li><a href="#experimento" data-en="Experiment">Experimento</a></li>
+          <li><a href="#pruebas" data-en="Tests">Pruebas</a></li>
+          <li><a href="#equipo" data-en="Team">Equipo</a></li>
+        </ul>
+        <div class="lang-switch" role="group" aria-label="Idioma / Language">
+          <button type="button" data-lang="es" aria-pressed="true" title="Español">ES</button>
+          <button type="button" data-lang="en" aria-pressed="false" title="English">EN</button>
+        </div>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú" data-en-aria="Open menu" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+  <!-- ===================== INICIO ===================== -->
+  <header class="hero view" id="inicio">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <span class="eyebrow" data-en="Operating Systems · Final project 03">Sistemas Operativos · Proyecto final 03</span>
+        <h1>Deadlock <span>Hunter</span></h1>
+        <p class="hero-sub" data-en="Deadlock detector">Detector de bloqueos</p>
+        <p class="hero-desc" data-en="Simulate processes that request and hold resources, draw the resource-allocation graph, detect circular wait and learn how to recover the system from a deadlock.">Simula procesos que solicitan y retienen recursos, dibuja el grafo de asignación, detecta la espera circular y te muestra cómo recuperar el sistema de un interbloqueo.</p>
+        <div class="hero-cta">
+          <a href="#simulador" class="btn btn-light" data-en="Open simulator →">Abrir simulador →</a>
+          <a href="#teoria" class="btn btn-outline" data-en="What is a deadlock?">¿Qué es un interbloqueo?</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 360 300">
+          <defs>
+            <marker id="h-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#ffd166"/></marker>
+          </defs>
+          <path d="M112,78 L238,78" class="h-edge" marker-end="url(#h-ar)"/>
+          <path d="M282,104 L282,192" class="h-edge dash" marker-end="url(#h-ar)"/>
+          <path d="M238,222 L112,222" class="h-edge" marker-end="url(#h-ar)"/>
+          <path d="M78,192 L78,108" class="h-edge dash" marker-end="url(#h-ar)"/>
+          <g class="h-proc"><circle cx="78" cy="78" r="32"/><text x="78" y="84">P1</text></g>
+          <g class="h-res"><rect x="244" y="54" width="76" height="48" rx="10"/><text x="282" y="84">R1</text></g>
+          <g class="h-proc"><circle cx="282" cy="222" r="32"/><text x="282" y="228">P2</text></g>
+          <g class="h-res"><rect x="40" y="198" width="76" height="48" rx="10"/><text x="78" y="228">R2</text></g>
+          <text x="180" y="156" class="h-warn" data-en="Circular wait!">¡Espera circular!</text>
+        </svg>
+      </div>
+    </div>
+    <div class="container features">
+      <div class="feature clickable" data-modal="m-f1" role="button" tabindex="0"><b>01</b><h3 data-en="Allocation graph">Grafo de asignación</h3><p data-en="Processes, resources and instances drawn in real time.">Procesos, recursos e instancias dibujados en tiempo real.</p><span class="more" data-en="Learn more →">Ver más →</span></div>
+      <div class="feature clickable" data-modal="m-f2" role="button" tabindex="0"><b>02</b><h3 data-en="Request and release">Solicitar y liberar</h3><p data-en="FIFO wait queues and automatic unblocking.">Colas de espera FIFO y desbloqueo automático.</p><span class="more" data-en="Learn more →">Ver más →</span></div>
+      <div class="feature clickable" data-modal="m-f3" role="button" tabindex="0"><b>03</b><h3 data-en="Cycle detection">Detección de ciclos</h3><p data-en="Explains the circular wait and confirms whether it is a deadlock.">Explica la espera circular y confirma si es interbloqueo.</p><span class="more" data-en="Learn more →">Ver más →</span></div>
+      <div class="feature clickable" data-modal="m-f4" role="button" tabindex="0"><b>04</b><h3 data-en="Recovery">Recuperación</h3><p data-en="Abort a victim or preempt a resource.">Aborta una víctima o expropia un recurso.</p><span class="more" data-en="Learn more →">Ver más →</span></div>
+    </div>
+  </header>
+
+  <!-- ===================== SIMULADOR ===================== -->
+  <section class="section sim-section view" id="simulador" hidden>
+    <div class="container-wide">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow green" data-en="Tool">Herramienta</span>
+          <h2 data-en="Simulator">Simulador</h2>
+          <p data-en="Create processes and resources, or load a scenario and run it step by step.">Crea procesos y recursos, o carga un escenario y ejecútalo paso a paso.</p>
+        </div>
+        <div class="top-actions">
+          <button class="btn-sm" data-modal="m-howto" data-en="? How to use it">? Cómo usarlo</button>
+          <button id="btn-export" class="btn-sm" title="Descarga el estado, el análisis y el registro como evidencia" data-en-title="Download the state, analysis and log as evidence" data-en="⭳ Export evidence">⭳ Exportar evidencia</button>
+          <label class="btn-sm file-btn" title="Carga un estado exportado previamente" data-en-title="Load a previously exported state"><span data-en="⭱ Import">⭱ Importar</span><input id="file-import" type="file" accept="application/json" hidden></label>
+          <button id="btn-reset" class="btn-sm danger" data-en="↺ Reset">↺ Reiniciar</button>
+        </div>
+      </div>
+
+      <div class="layout">
+        <!-- Panel izquierdo -->
+        <aside class="panel left">
+          <section class="card">
+            <h3 class="card-title"><span class="num">1</span> <span data-en="Create nodes">Crear nodos</span></h3>
+            <div class="row">
+              <input id="in-proc" placeholder="Nombre (auto: P1…)" data-en-ph="Name (auto: P1…)" maxlength="12">
+              <button id="btn-add-proc" data-en="+ Process">+ Proceso</button>
+            </div>
+            <div class="row">
+              <input id="in-res" placeholder="Nombre (auto: R1…)" data-en-ph="Name (auto: R1…)" maxlength="12">
+              <input id="in-inst" type="number" min="1" max="9" value="1" title="Instancias" data-en-title="Instances" class="narrow">
+              <button id="btn-add-res" data-en="+ Resource">+ Recurso</button>
+            </div>
+            <p class="hint" data-en="Instances are identical copies of the resource (e.g. 2 printers).">Las instancias son copias idénticas del recurso (p. ej. 2 impresoras).</p>
+          </section>
+
+          <section class="card">
+            <h3 class="card-title"><span class="num">2</span> <span data-en="Operate">Operar</span></h3>
+            <label><span data-en="Process">Proceso</span> <select id="sel-proc"></select></label>
+            <label><span data-en="Resource">Recurso</span> <select id="sel-res"></select></label>
+            <div class="btn-grid">
+              <button id="btn-request" class="primary" data-en="Request">Solicitar</button>
+              <button id="btn-release" data-en="Release">Liberar</button>
+              <button id="btn-terminate" class="warn" data-en="Terminate process">Finalizar proceso</button>
+              <button id="btn-del-res" class="ghost" data-en="Delete resource">Eliminar recurso</button>
+            </div>
+            <p class="hint" data-en="Click a node in the graph to select it. Drag it to move it.">Haz clic en un nodo del grafo para seleccionarlo. Arrástralo para moverlo.</p>
+          </section>
+
+          <section class="card">
+            <h3 class="card-title"><span class="num">3</span> <span data-en="Scenarios">Escenarios</span></h3>
+            <div id="scenario-list" class="scenario-list"></div>
+            <div id="scenario-player" class="scenario-player" hidden>
+              <h4 id="sc-title"></h4>
+              <p id="sc-desc" class="hint"></p>
+              <ol id="sc-steps" class="steps"></ol>
+              <div class="row">
+                <button id="btn-step" class="primary" data-en="Step ▶">Paso ▶</button>
+                <button id="btn-run-all" data-en="Run all ⏩">Ejecutar todo ⏩</button>
+              </div>
+              <div id="sc-lesson" class="lesson" hidden></div>
+            </div>
+          </section>
+        </aside>
+
+        <!-- Centro -->
+        <section class="panel center">
+          <div id="status" class="status ok">Sin procesos todavía</div>
+          <div class="graph-wrap card">
+            <svg id="graph" viewBox="0 0 900 560" role="img" aria-label="Grafo de asignación de recursos" data-en-aria="Resource allocation graph">
+              <defs>
+                <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" class="grid-dot"/></pattern>
+                <marker id="ar-request" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="mk-request"/></marker>
+                <marker id="ar-assign" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="mk-assign"/></marker>
+                <marker id="ar-cycle" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="mk-cycle"/></marker>
+                <marker id="ar-dead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="mk-dead"/></marker>
+              </defs>
+              <rect width="900" height="560" fill="url(#grid)"/>
+              <g id="g-edges"></g>
+              <g id="g-nodes"></g>
+            </svg>
+            <div id="empty-hint" class="empty-hint">
+              <div data-en="<b>The graph is empty</b><br>Create processes and resources, or load a scenario from the left panel."><b>El grafo está vacío</b><br>Crea procesos y recursos, o carga un escenario del panel izquierdo.</div>
+            </div>
+          </div>
+          <div class="legend">
+            <span><i class="lg-proc"></i> <span data-en="Process">Proceso</span></span>
+            <span><i class="lg-res"></i> <span data-en="Resource (● allocated, ○ free)">Recurso (● asignada, ○ libre)</span></span>
+            <span><i class="lg-line assign"></i> <span data-en="Allocation R → P">Asignación R → P</span></span>
+            <span><i class="lg-line request"></i> <span data-en="Request P → R">Solicitud P → R</span></span>
+            <span><i class="lg-line cycle"></i> <span data-en="Cycle without deadlock">Ciclo sin interbloqueo</span></span>
+            <span><i class="lg-line dead"></i> <span data-en="Deadlock">Interbloqueo</span></span>
+          </div>
+          <section class="card log-card">
+            <div class="card-head">
+              <h3 class="card-title" data-en="Event log">Registro de eventos</h3>
+              <button id="btn-clear-log" class="ghost small" data-en="Clear">Limpiar</button>
+            </div>
+            <ol id="log" class="log"></ol>
+          </section>
+        </section>
+
+        <!-- Panel derecho -->
+        <aside class="panel right">
+          <section class="card">
+            <h3 class="card-title" data-en="System analysis">Análisis del sistema</h3>
+            <div id="analysis"></div>
+          </section>
+          <section class="card">
+            <h3 class="card-title" data-en="Matrices">Matrices</h3>
+            <div id="matrices" class="matrices"></div>
+          </section>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TEORÍA ===================== -->
+  <section class="section view" id="teoria" hidden>
+    <div class="container">
+      <div class="section-head center">
+        <div>
+          <span class="eyebrow green" data-en="Concepts">Conceptos</span>
+          <h2 data-en="What is a deadlock?">¿Qué es un interbloqueo?</h2>
+          <p data-en="A <b>deadlock</b> happens when a group of processes waits forever because each one holds something another one needs.">Un <b>interbloqueo</b> (<i>deadlock</i>) ocurre cuando un grupo de procesos queda esperando para siempre porque cada uno retiene algo que otro necesita.</p>
+        </div>
+      </div>
+
+      <div class="analogy clickable" data-modal="m-basics" role="button" tabindex="0">
+        <div class="analogy-icon">🔪 🪵</div>
+        <div>
+          <h3 data-en="An everyday example">Un ejemplo cotidiano</h3>
+          <p data-en="Ana takes the knife and needs the board; Beto takes the board and needs the knife. Both wait forever.">Ana toma el cuchillo y necesita la tabla; Beto toma la tabla y necesita el cuchillo. Ambos esperan para siempre.</p>
+          <span class="more" data-en="What are processes and resources? →">¿Qué son procesos y recursos? →</span>
+        </div>
+      </div>
+
+      <h3 class="sub-title" data-en="The 4 Coffman conditions">Las 4 condiciones de Coffman</h3>
+      <p class="muted" data-en="All four must hold at the same time. Click each one to see an example.">Deben cumplirse las cuatro al mismo tiempo. Haz clic en cada una para ver un ejemplo.</p>
+      <div class="grid-4">
+        <div class="info-card clickable" data-modal="m-cf1" role="button" tabindex="0"><span class="ic">1</span><h4 data-en="Mutual exclusion">Exclusión mutua</h4><p data-en="One process at a time.">Un proceso a la vez.</p><span class="more" data-en="Learn more →">Ver más →</span></div>
+        <div class="info-card clickable" data-modal="m-cf2" role="button" tabindex="0"><span class="ic">2</span><h4 data-en="Hold and wait">Retención y espera</h4><p data-en="Keeps what it has while waiting.">Conserva lo que tiene mientras espera.</p><span class="more" data-en="Learn more →">Ver más →</span></div>
+        <div class="info-card clickable" data-modal="m-cf3" role="button" tabindex="0"><span class="ic">3</span><h4 data-en="No preemption">No expropiación</h4><p data-en="Nobody can take it away.">Nadie se lo puede quitar.</p><span class="more" data-en="Learn more →">Ver más →</span></div>
+        <div class="info-card clickable" data-modal="m-cf4" role="button" tabindex="0"><span class="ic">4</span><h4 data-en="Circular wait">Espera circular</h4><p data-en="A closed chain of waits.">Una cadena cerrada de esperas.</p><span class="more" data-en="Learn more →">Ver más →</span></div>
+      </div>
+
+      <h3 class="sub-title" data-en="How does Deadlock Hunter detect it?">¿Cómo lo detecta Deadlock Hunter?</h3>
+      <div class="grid-4">
+        <div class="step-card clickable" data-modal="m-d1" role="button" tabindex="0"><span class="step-n" data-en="Step 1">Paso 1</span><h4 data-en="Build the graph">Construye el grafo</h4><span class="more" data-en="Learn more →">Ver más →</span></div>
+        <div class="step-card clickable" data-modal="m-d2" role="button" tabindex="0"><span class="step-n" data-en="Step 2">Paso 2</span><h4 data-en="Search for cycles">Busca ciclos</h4><span class="more" data-en="Learn more →">Ver más →</span></div>
+        <div class="step-card clickable" data-modal="m-d3" role="button" tabindex="0"><span class="step-n" data-en="Step 3">Paso 3</span><h4 data-en="Confirm the deadlock">Confirma el bloqueo</h4><span class="more" data-en="Learn more →">Ver más →</span></div>
+        <div class="step-card clickable warn-card" data-modal="m-d4" role="button" tabindex="0"><span class="step-n" data-en="Important">Importante</span><h4 data-en="Is a cycle always a deadlock?">¿Ciclo = interbloqueo?</h4><span class="more" data-en="Learn more →">Ver más →</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EXPERIMENTO ===================== -->
+  <section class="section alt view" id="experimento" hidden>
+    <div class="container">
+      <div class="section-head center">
+        <div>
+          <span class="eyebrow green" data-en="Experimentation challenge">Reto de experimentación</span>
+          <h2 data-en="With deadlock vs. without deadlock">Con bloqueo vs. sin bloqueo</h2>
+          <p data-en="Same processes, same resources. The only thing that changes is the <b>order</b> in which they are requested.">Mismos procesos, mismos recursos. Lo único que cambia es el <b>orden</b> en que se piden.</p>
+        </div>
+      </div>
+      <div class="compare">
+        <article class="compare-card bad">
+          <span class="tag-big" data-en="WITH DEADLOCK">CON BLOQUEO</span>
+          <h3 data-en="Opposite order">Orden opuesto</h3>
+          <p data-en="P1 asks R1 → R2 and P2 asks R2 → R1. Each grabs one and waits for the other: <b>deadlock</b>.">P1 pide R1 → R2 y P2 pide R2 → R1. Cada uno agarra uno y espera el otro: <b>interbloqueo</b>.</p>
+          <div class="card-actions">
+            <button class="btn btn-soft" data-modal="m-ex1" data-en="See steps">Ver pasos</button>
+            <a href="#simulador" class="btn btn-red" data-load-sc="0" data-en="Try it ▶">Probar ▶</a>
+          </div>
+        </article>
+        <article class="compare-card good">
+          <span class="tag-big" data-en="NO DEADLOCK">SIN BLOQUEO</span>
+          <h3 data-en="Global order (R1 before R2)">Orden global (R1 antes que R2)</h3>
+          <p data-en="Both ask R1 → R2. P2 waits, but <b>holding nothing</b>, so the cycle never closes.">Ambos piden R1 → R2. P2 espera, pero <b>sin retener nada</b>, así que el ciclo nunca se cierra.</p>
+          <div class="card-actions">
+            <button class="btn btn-soft" data-modal="m-ex2" data-en="See steps">Ver pasos</button>
+            <a href="#simulador" class="btn btn-green" data-load-sc="1" data-en="Try it ▶">Probar ▶</a>
+          </div>
+        </article>
+      </div>
+      <div class="center-actions">
+        <button class="btn btn-green" data-modal="m-ex3" data-en="📊 See the full comparison">📊 Ver comparación completa</button>
+      </div>
+      <p class="conclusion" data-en="<b>Conclusion:</b> imposing a global order breaks the <b>circular wait</b>. Waiting is not the same as being deadlocked."><b>Conclusión:</b> imponer un orden global rompe la <b>espera circular</b>. Esperar no es lo mismo que estar interbloqueado.</p>
+    </div>
+  </section>
+
+  <!-- ===================== PRUEBAS ===================== -->
+  <section class="section view" id="pruebas" hidden>
+    <div class="container">
+      <div class="section-head center">
+        <div>
+          <span class="eyebrow green" data-en="Evidence">Evidencias</span>
+          <h2 data-en="Automated tests">Pruebas automatizadas</h2>
+          <p data-en="These tests run live every time you open the page and verify the detection engine.">Estas pruebas se ejecutan en vivo cada vez que abres la página y verifican el motor de detección.</p>
+        </div>
+      </div>
+      <div class="tests-cards">
+        <div class="tests-hero">
+          <div class="big-num" id="tests-num">–</div>
+          <div><b id="tests-label">…</b><br><span class="muted" id="tests-when"></span></div>
+        </div>
+        <div class="grid-2">
+          <div class="info-card clickable" data-modal="m-tests" role="button" tabindex="0"><span class="ic">✔</span><h4 data-en="Test list">Lista de pruebas</h4><p data-en="See each test and what it verifies.">Ver cada prueba y lo que verifica.</p><span class="more" data-en="Open →">Abrir →</span></div>
+          <div class="info-card clickable" data-modal="m-limits" role="button" tabindex="0"><span class="ic">!</span><h4 data-en="Known limitations">Limitaciones conocidas</h4><p data-en="What the simulator does not model.">Lo que el simulador no modela.</p><span class="more" data-en="Open →">Abrir →</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EQUIPO ===================== -->
+  <section class="section team-section view" id="equipo" hidden>
+    <div class="container">
+      <div class="section-head center">
+        <div>
+          <span class="eyebrow" data-en="Credits">Créditos</span>
+          <h2 data-en="Software developed by:">Software elaborado por:</h2>
+          <p data-en="6th-semester Systems Engineering students · Universidad Simón Bolívar, Cúcuta campus">Estudiantes de 6.º semestre de Ingeniería de Sistemas · Universidad Simón Bolívar, sede Cúcuta</p>
+        </div>
+      </div>
+      <div class="team">
+        <div class="member">
+          <div class="avatar">BC</div>
+          <h3>Brayan Casanova</h3>
+          <p data-en="Systems Engineering">Ingeniería de Sistemas</p>
+          <span class="chip" data-en="6th semester">6.º semestre</span>
+        </div>
+        <div class="member">
+          <div class="avatar">DF</div>
+          <h3>Deivy Florez</h3>
+          <p data-en="Systems Engineering">Ingeniería de Sistemas</p>
+          <span class="chip" data-en="6th semester">6.º semestre</span>
+        </div>
+      </div>
+      <p class="course" data-en="Course: <b>Operating Systems</b> · Final programming project · Concurrency and deadlocks">Asignatura: <b>Sistemas Operativos</b> · Proyecto final de programación · Concurrencia y bloqueos</p>
+    </div>
+  </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-logo"><img src="assets/logo-unisimon.png" alt="Universidad Simón Bolívar"></div>
+      <div class="footer-text" data-en="<b>Deadlock Hunter</b> · Academic software<br>Systems Engineering Program · Universidad Simón Bolívar · Cúcuta, Colombia<br>Developed by Brayan Casanova and Deivy Florez · 2026">
+        <b>Deadlock Hunter</b> · Software académico<br>
+        Programa de Ingeniería de Sistemas · Universidad Simón Bolívar · Cúcuta, Colombia<br>
+        Elaborado por Brayan Casanova y Deivy Florez · 2026
+      </div>
+      <a href="#" class="to-top" data-scrolltop data-en="↑ Back to top">↑ Volver arriba</a>
+    </div>
+  </footer>
+
+  <!-- ===================== VENTANA EMERGENTE ===================== -->
+  <dialog id="modal" class="modal" aria-labelledby="modal-body">
+    <button class="modal-close" id="modal-close" aria-label="Cerrar" data-en-aria="Close">✕</button>
+    <div id="modal-body" class="modal-body"></div>
+  </dialog>
+
+  <!-- Contenido de las ventanas emergentes (se mueve al diálogo al abrirlo) -->
+  <div id="modal-store" hidden>
+
+    <!-- Inicio: funciones -->
+    <div id="m-f1">
+      <span class="m-kicker">01</span>
+      <h3 data-en="Allocation graph">Grafo de asignación</h3>
+      <p data-en="The simulator draws the system as a graph that updates after every action:">El simulador dibuja el sistema como un grafo que se actualiza después de cada acción:</p>
+      <ul>
+        <li data-en="<b>Circles</b> are processes (P1, P2…).">Los <b>círculos</b> son procesos (P1, P2…).</li>
+        <li data-en="<b>Boxes</b> are resources; each dot is an instance (● allocated, ○ free).">Los <b>cuadros</b> son recursos; cada punto es una instancia (● asignada, ○ libre).</li>
+        <li data-en="A solid arrow <b>R → P</b> means the resource is allocated to the process.">Una flecha continua <b>R → P</b> indica que el recurso está asignado al proceso.</li>
+        <li data-en="A dashed arrow <b>P → R</b> means the process is waiting for the resource.">Una flecha punteada <b>P → R</b> indica que el proceso está esperando el recurso.</li>
+      </ul>
+      <a href="#simulador" class="btn btn-green" data-en="Go to the simulator →">Ir al simulador →</a>
+    </div>
+    <div id="m-f2">
+      <span class="m-kicker">02</span>
+      <h3 data-en="Request and release">Solicitar y liberar</h3>
+      <ul>
+        <li data-en="<b>Request:</b> if there is a free instance, it is allocated right away; otherwise the process is blocked and joins a FIFO queue.">Al <b>solicitar</b>, si hay una instancia libre se asigna de inmediato; si no, el proceso se bloquea y entra a una fila (FIFO).</li>
+        <li data-en="<b>Release:</b> the instance goes automatically to the first process in the queue.">Al <b>liberar</b>, la instancia pasa automáticamente al primero de la fila.</li>
+        <li data-en="<b>Terminate:</b> the process releases everything it held.">Al <b>finalizar</b> un proceso, se libera todo lo que tenía.</li>
+      </ul>
+      <p class="muted" data-en="Every action is recorded in the event log.">Cada acción queda escrita en el registro de eventos.</p>
+      <a href="#simulador" class="btn btn-green" data-en="Go to the simulator →">Ir al simulador →</a>
+    </div>
+    <div id="m-f3">
+      <span class="m-kicker">03</span>
+      <h3 data-en="Cycle detection">Detección de ciclos</h3>
+      <p data-en="After each action the simulator looks for cycles in the graph and explains them in words, e.g.:">Después de cada acción el simulador busca ciclos en el grafo y los explica con palabras, por ejemplo:</p>
+      <pre class="code">P1 → R2 → P2 → R1 → P1</pre>
+      <p data-en="Then it runs the detection algorithm to confirm whether the cycle is a real deadlock (<b>red</b>) or just a possible circular wait (<b>yellow</b>).">Luego ejecuta el algoritmo de detección para confirmar si el ciclo es un interbloqueo real (<b>rojo</b>) o solo una espera circular posible (<b>amarillo</b>).</p>
+      <a href="#teoria" class="btn btn-green" data-en="See how it works →">Ver cómo funciona →</a>
+    </div>
+    <div id="m-f4">
+      <span class="m-kicker">04</span>
+      <h3 data-en="Recovery">Recuperación</h3>
+      <p data-en="When there is a deadlock, the analysis panel offers:">Cuando hay interbloqueo, el panel de análisis ofrece:</p>
+      <ul>
+        <li data-en="<b>Abort a process:</b> it releases everything and the others can continue.">Abortar un proceso: libera todo y los demás pueden seguir.</li>
+        <li data-en="<b>Preempt a resource:</b> take it away from a process and give it to the one waiting.">Expropiar un recurso: quitárselo a un proceso y dárselo al que espera.</li>
+        <li data-en="<b>Automatic recovery:</b> aborts victims until the deadlock is gone.">Recuperación automática: aborta víctimas hasta que desaparece el bloqueo.</li>
+      </ul>
+      <p class="muted" data-en="The simulator suggests the victim that leaves fewer blocked processes and loses fewer resources.">El simulador sugiere la víctima que deja menos procesos bloqueados y pierde menos recursos.</p>
+      <a href="#simulador" class="btn btn-green" data-en="Go to the simulator →">Ir al simulador →</a>
+    </div>
+
+    <!-- Simulador: ayuda -->
+    <div id="m-howto">
+      <h3 data-en="How to use the simulator">Cómo usar el simulador</h3>
+      <ol class="nice-list">
+        <li data-en="<b>Fastest way:</b> in <i>3 · Scenarios</i> choose one and press <b>Step ▶</b> or <b>Run all ⏩</b>.">La forma más rápida: en <i>3 · Escenarios</i> elige uno y pulsa <b>Paso ▶</b> o <b>Ejecutar todo ⏩</b>.</li>
+        <li data-en="<b>By hand:</b> create processes and resources in <i>1 · Create nodes</i>.">A mano: crea procesos y recursos en <i>1 · Crear nodos</i>.</li>
+        <li data-en="Pick a process and a resource in <i>2 · Operate</i> and press <b>Request</b>, <b>Release</b> or <b>Terminate</b>.">Elige un proceso y un recurso en <i>2 · Operar</i> y pulsa <b>Solicitar</b>, <b>Liberar</b> o <b>Finalizar</b>.</li>
+        <li data-en="Watch the banner: <b>green</b> = no deadlock, <b>yellow</b> = cycle without deadlock, <b>red</b> = deadlock.">Mira el aviso superior: <b>verde</b> = sin bloqueo, <b>amarillo</b> = ciclo sin interbloqueo, <b>rojo</b> = interbloqueo.</li>
+        <li data-en="On the right, <i>System analysis</i> explains the cycle and offers recovery options.">A la derecha, <i>Análisis del sistema</i> explica el ciclo y ofrece opciones de recuperación.</li>
+      </ol>
+    </div>
+
+    <!-- Teoría -->
+    <div id="m-basics">
+      <h3 data-en="Processes, resources and instances">Procesos, recursos e instancias</h3>
+      <dl class="defs">
+        <dt data-en="Process">Proceso</dt>
+        <dd data-en="A program that is running (Chrome, Word, Spotify…). In the simulator: a <b>circle</b>.">Un programa que se está ejecutando (Chrome, Word, Spotify…). En el simulador: un <b>círculo</b>.</dd>
+        <dt data-en="Resource">Recurso</dt>
+        <dd data-en="Something a process needs in order to work: a printer, a file, the camera, memory. In the simulator: a <b>box</b>.">Algo que un proceso necesita para trabajar: impresora, archivo, cámara, memoria. En el simulador: un <b>cuadro</b>.</dd>
+        <dt data-en="Instance">Instancia</dt>
+        <dd data-en="How many identical copies of the resource exist (2 printers = 2 instances). In the simulator: the <b>dots</b> inside the box.">Cuántas copias iguales hay del recurso (2 impresoras = 2 instancias). En el simulador: los <b>puntos</b> dentro del cuadro.</dd>
+      </dl>
+      <p data-en="In the example, Ana and Beto are <b>processes</b> and the knife and board are <b>resources</b>. Waiting is normal; the problem is when the wait <b>never ends</b>.">En el ejemplo, Ana y Beto son <b>procesos</b> y el cuchillo y la tabla son <b>recursos</b>. Esperar es normal; el problema es cuando la espera <b>nunca termina</b>.</p>
+    </div>
+    <div id="m-cf1">
+      <span class="m-kicker" data-en="Condition 1">Condición 1</span>
+      <h3 data-en="Mutual exclusion">Exclusión mutua</h3>
+      <p data-en="A resource cannot be shared: while one process uses it, the others must wait.">Un recurso no se puede compartir: mientras un proceso lo usa, los demás deben esperar.</p>
+      <div class="m-box"><b data-en="Example">Ejemplo</b><p data-en="A printer prints one document at a time.">Una impresora imprime un documento a la vez.</p></div>
+      <div class="m-box"><b data-en="In the simulator">En el simulador</b><p data-en="Each dot ● of a resource belongs to a single process.">Cada punto ● de un recurso pertenece a un solo proceso.</p></div>
+      <div class="m-box ok"><b data-en="How to break it">Cómo romperla</b><p data-en="Make the resource shareable (e.g. read-only files). Not always possible.">Hacer el recurso compartible (p. ej. archivos de solo lectura). No siempre es posible.</p></div>
+    </div>
+    <div id="m-cf2">
+      <span class="m-kicker" data-en="Condition 2">Condición 2</span>
+      <h3 data-en="Hold and wait">Retención y espera</h3>
+      <p data-en="A process keeps the resources it already has while waiting for more.">Un proceso conserva los recursos que ya tiene mientras espera otros.</p>
+      <div class="m-box"><b data-en="Example">Ejemplo</b><p data-en="P1 holds R1 and asks for R2 without releasing R1.">P1 tiene R1 y pide R2 sin soltar R1.</p></div>
+      <div class="m-box"><b data-en="In the simulator">En el simulador</b><p data-en="A process with an incoming solid arrow (it holds something) and an outgoing dashed arrow (it waits).">Un proceso con una flecha continua que llega (tiene algo) y una punteada que sale (espera).</p></div>
+      <div class="m-box ok"><b data-en="How to break it">Cómo romperla</b><p data-en="Request all resources at the start, or release everything before asking for more.">Pedir todos los recursos al inicio, o soltar todo antes de pedir más.</p></div>
+    </div>
+    <div id="m-cf3">
+      <span class="m-kicker" data-en="Condition 3">Condición 3</span>
+      <h3 data-en="No preemption">No expropiación</h3>
+      <p data-en="Nobody can take a resource away from a process; only the process decides when to release it.">Nadie puede quitarle un recurso a un proceso; solo él decide cuándo soltarlo.</p>
+      <div class="m-box"><b data-en="Example">Ejemplo</b><p data-en="The system cannot take the printer away in the middle of a print job.">El sistema no puede quitar la impresora a mitad de una impresión.</p></div>
+      <div class="m-box"><b data-en="In the simulator">En el simulador</b><p data-en="Resources are only freed with <b>Release</b>… unless you use recovery.">Los recursos solo se liberan con <b>Liberar</b>… salvo que uses la recuperación.</p></div>
+      <div class="m-box ok"><b data-en="How to break it">Cómo romperla</b><p data-en="Let the system take resources away. That is exactly what the <b>Preempt</b> recovery option does.">Permitir que el sistema quite recursos. Eso es justo lo que hace la opción de recuperación <b>Expropiar</b>.</p></div>
+    </div>
+    <div id="m-cf4">
+      <span class="m-kicker" data-en="Condition 4">Condición 4</span>
+      <h3 data-en="Circular wait">Espera circular</h3>
+      <p data-en="There is a closed chain of processes, each waiting for a resource held by the next one.">Existe una cadena cerrada de procesos, donde cada uno espera un recurso que tiene el siguiente.</p>
+      <pre class="code">P1 → R2 → P2 → R1 → P1</pre>
+      <div class="m-box"><b data-en="In the simulator">En el simulador</b><p data-en="The arrows of the cycle turn <b>red</b>.">Las flechas del ciclo se pintan de <b>rojo</b>.</p></div>
+      <div class="m-box ok"><b data-en="How to break it">Cómo romperla</b><p data-en="Request resources always in the same global order (see the <i>Global ordering</i> scenario).">Pedir los recursos siempre en el mismo orden global (ver el escenario <i>Orden global</i>).</p></div>
+    </div>
+    <div id="m-d1">
+      <span class="m-kicker" data-en="Step 1">Paso 1</span>
+      <h3 data-en="Build the graph">Construye el grafo</h3>
+      <p data-en="Each allocation is an arrow <b>R → P</b> and each wait is an arrow <b>P → R</b>.">Cada asignación es una flecha <b>R → P</b> y cada espera es una flecha <b>P → R</b>.</p>
+      <p data-en="The <b>Allocation</b> and <b>Request</b> matrices in the simulator show the same information as tables.">Las matrices de <b>Asignación</b> y <b>Solicitud</b> del simulador muestran la misma información en forma de tabla.</p>
+    </div>
+    <div id="m-d2">
+      <span class="m-kicker" data-en="Step 2">Paso 2</span>
+      <h3 data-en="Search for cycles">Busca ciclos</h3>
+      <p data-en="It simplifies the graph to a <b>wait-for graph</b>: P → Q if P waits for something Q holds.">Simplifica el grafo a un <b>grafo de espera</b>: P → Q si P espera algo que tiene Q.</p>
+      <p data-en="Then it walks it with a depth-first search (<b>DFS</b>). If a path returns to the starting process, there is a cycle: a <b>circular wait</b>.">Luego lo recorre con una búsqueda en profundidad (<b>DFS</b>). Si un camino regresa al proceso inicial, hay un ciclo: una <b>espera circular</b>.</p>
+    </div>
+    <div id="m-d3">
+      <span class="m-kicker" data-en="Step 3">Paso 3</span>
+      <h3 data-en="Confirm the deadlock">Confirma el bloqueo</h3>
+      <p data-en="Detection algorithm: it simulates which processes could finish with what is free.">Algoritmo de detección: simula qué procesos podrían terminar con lo que hay libre.</p>
+<pre class="code">Work ← Disponible ; Finish[i] ← false
+repetir
+  buscar Pi: Finish[i] = false y Solicitud_i ≤ Work
+  Work ← Work + Asignación_i ; Finish[i] ← true
+Los Pi con Finish = false están interbloqueados</pre>
+      <p data-en="The simulator shows this trace step by step in <i>Detection algorithm</i>.">El simulador muestra esta traza paso a paso en <i>Algoritmo de detección</i>.</p>
+    </div>
+    <div id="m-d4">
+      <span class="m-kicker" data-en="Important">Importante</span>
+      <h3 data-en="Is a cycle always a deadlock?">¿Un ciclo siempre es interbloqueo?</h3>
+      <div class="m-box"><b data-en="1 instance per resource">1 instancia por recurso</b><p data-en="Yes: cycle = deadlock.">Sí: ciclo = interbloqueo.</p></div>
+      <div class="m-box"><b data-en="Several instances">Varias instancias</b><p data-en="Not necessarily: another process outside the cycle can release a copy and break it.">No necesariamente: otro proceso fuera del ciclo puede soltar una copia y romperlo.</p></div>
+      <a href="#simulador" class="btn btn-green" data-load-sc="2" data-en="Try the “Cycle without deadlock” scenario ▶">Probar el escenario “Ciclo sin interbloqueo” ▶</a>
+    </div>
+
+    <!-- Experimento -->
+    <div id="m-ex1">
+      <span class="m-kicker bad" data-en="WITH DEADLOCK">CON BLOQUEO</span>
+      <h3 data-en="Opposite order">Orden opuesto</h3>
+      <ol class="mini-steps">
+        <li data-en="P1 requests R1 ✔">P1 solicita R1 ✔</li>
+        <li data-en="P2 requests R2 ✔">P2 solicita R2 ✔</li>
+        <li data-en="P1 requests R2 ⏳ (P2 has it)">P1 solicita R2 ⏳ (lo tiene P2)</li>
+        <li data-en="P2 requests R1 ⏳ (P1 has it)">P2 solicita R1 ⏳ (lo tiene P1)</li>
+      </ol>
+      <p data-en="<b>Result:</b> the cycle P1 → R2 → P2 → R1 → P1 is formed. Each one holds what the other needs: <b>deadlock</b>."><b>Resultado:</b> se forma el ciclo P1 → R2 → P2 → R1 → P1. Cada uno retiene lo que el otro necesita: <b>interbloqueo</b>.</p>
+      <a href="#simulador" class="btn btn-red" data-load-sc="0" data-en="Try it in the simulator ▶">Probar en el simulador ▶</a>
+    </div>
+    <div id="m-ex2">
+      <span class="m-kicker" data-en="NO DEADLOCK">SIN BLOQUEO</span>
+      <h3 data-en="Global order (R1 before R2)">Orden global (R1 antes que R2)</h3>
+      <ol class="mini-steps">
+        <li data-en="P1 requests R1 ✔">P1 solicita R1 ✔</li>
+        <li data-en="P2 requests R1 ⏳ (waits holding nothing)">P2 solicita R1 ⏳ (espera sin retener nada)</li>
+        <li data-en="P1 requests R2 ✔, works and releases everything">P1 solicita R2 ✔, trabaja y libera todo</li>
+        <li data-en="P2 gets R1, then R2 ✔ and finishes">P2 recibe R1, luego R2 ✔ y termina</li>
+      </ol>
+      <p data-en="<b>Result:</b> P2 waits, but it <b>holds nothing</b> while waiting, so a cycle never closes. Everyone finishes."><b>Resultado:</b> P2 espera, pero <b>no retiene nada</b> mientras espera, así que nunca se cierra un ciclo. Todos terminan.</p>
+      <a href="#simulador" class="btn btn-green" data-load-sc="1" data-en="Try it in the simulator ▶">Probar en el simulador ▶</a>
+    </div>
+    <div id="m-ex3">
+      <h3 data-en="Full comparison">Comparación completa</h3>
+      <div class="table-wrap">
+        <table class="cmp-table">
+          <thead><tr><th data-en="Criterion">Criterio</th><th data-en="With deadlock">Con bloqueo</th><th data-en="No deadlock">Sin bloqueo</th></tr></thead>
+          <tbody>
+            <tr><td data-en="Request order">Orden de petición</td><td>P1: R1→R2 · P2: R2→R1</td><td data-en="Both: R1→R2">Ambos: R1→R2</td></tr>
+            <tr><td data-en="Hold and wait">Retención y espera</td><td data-en="Yes, both">Sí, ambos</td><td data-en="No: P2 waits empty-handed">No: P2 espera con las manos vacías</td></tr>
+            <tr><td data-en="Circular wait">Espera circular</td><td class="t-bad" data-en="Yes">Sí</td><td class="t-good">No</td></tr>
+            <tr><td data-en="Final state">Estado final</td><td class="t-bad" data-en="Deadlock">Interbloqueo</td><td class="t-good" data-en="Everyone finishes">Todos terminan</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p data-en="<b>Conclusion:</b> imposing a global order on resources breaks the <b>circular wait</b> condition. Waiting is not the same as being deadlocked."><b>Conclusión:</b> imponer un orden global a los recursos rompe la condición de <b>espera circular</b>. Esperar no es lo mismo que estar interbloqueado.</p>
+    </div>
+
+    <!-- Pruebas -->
+    <div id="m-tests">
+      <h3 data-en="Automated tests">Pruebas automatizadas</h3>
+      <ul id="tests-list" class="tests-list"></ul>
+    </div>
+    <div id="m-limits">
+      <h3 data-en="Known limitations">Limitaciones conocidas</h3>
+      <ul>
+        <li data-en="Each request asks for one instance, and a blocked process waits for only one resource at a time.">Cada solicitud pide una instancia y un proceso bloqueado espera un solo recurso a la vez.</li>
+        <li data-en="The simulation is event-driven: there are no real threads, CPU times or scheduler.">La simulación es por eventos: no hay hilos reales, tiempos de CPU ni planificador.</li>
+        <li data-en="Detection and recovery are implemented; not prevention or avoidance (banker's algorithm).">Se implementan detección y recuperación; no prevención ni evitación (algoritmo del banquero).</li>
+        <li data-en="Preemption releases the resource but does not simulate the process <i>rollback</i>.">La expropiación libera el recurso pero no simula el <i>rollback</i> del proceso.</li>
+        <li data-en="The victim is chosen with a heuristic (remaining deadlocked processes and lost instances), without priorities.">La víctima se elige con una heurística (bloqueados restantes e instancias perdidas), sin prioridades.</li>
+        <li data-en="Designed for teaching-size graphs: at most 9 instances per resource and 100 reported cycles.">Pensado para grafos didácticos: máximo 9 instancias por recurso y 100 ciclos reportados.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/i18n.js?v=6"></script>
+  <script src="js/engine.js?v=6"></script>
+  <script src="js/scenarios.js?v=6"></script>
+  <script src="tests/cases.js?v=6"></script>
+  <script src="js/app.js?v=6"></script>
+  <script src="js/site.js?v=6"></script>
+</body>
+</html>
