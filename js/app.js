@@ -79,6 +79,7 @@
     const gE = $('g-edges'), gN = $('g-nodes');
     gE.innerHTML = ''; gN.innerHTML = '';
     $('empty-hint').style.display = (sys.processes.size + sys.resources.size) ? 'none' : 'flex';
+    renderGraphHint();
 
     const deadEdges = new Set(), cycleEdges = new Set(), deadRes = new Set();
     for (const c of analysis.cycles) {
@@ -151,6 +152,20 @@
       const holders = sys.holdersOf(r.id).map(x => x.count > 1 ? `${x.pid}×${x.count}` : x.pid).join(', ') || t('word.nobody');
       el('title', {}, g).textContent = t('tip.res', { id: r.id, free: r.total - used, total: r.total, holders, queue: r.queue.join(', ') || t('word.empty') });
     }
+  }
+
+  /** Aviso dentro del grafo cuando hay nodos pero todavía no hay flechas. */
+  function renderGraphHint() {
+    const hint = $('graph-hint');
+    const hasNodes = sys.processes.size > 0 && sys.resources.size > 0;
+    const noEdges = sys.edges().length === 0;
+    const scenarioPending = !!player && player.index === 0;
+    const show = hasNodes && noEdges && (scenarioPending || !player);
+    hint.hidden = !show;
+    if (show) hint.innerHTML = t(scenarioPending ? 'hint.scenario' : 'hint.noEdges');
+    // resaltar los botones del reproductor mientras el escenario no ha empezado
+    $('btn-step').classList.toggle('attention', scenarioPending);
+    $('btn-run-all').classList.toggle('attention', scenarioPending);
   }
 
   /* ======================= arrastre y selección ======================= */

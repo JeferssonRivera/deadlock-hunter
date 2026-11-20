@@ -134,6 +134,8 @@
       'toast.imported': 'Estado importado correctamente.',
       'toast.importFail': 'No se pudo importar: {msg}',
 
+      'hint.scenario': '▶ Escenario cargado. Pulsa <b>Paso ▶</b> para ejecutarlo paso a paso o <b>Ejecutar todo ⏩</b> para verlo completo: las flechas aparecen cuando los procesos piden recursos.',
+      'hint.noEdges': 'Aún no hay flechas: elige un proceso y un recurso en <b>2 · Operar</b> y pulsa <b>Solicitar</b>, o carga un escenario.',
       'tests.ok': 'Todas las pruebas superadas',
       'tests.fail': '{n} prueba(s) fallida(s)',
       'tests.when': 'Ejecutadas: {date}',
@@ -258,6 +260,8 @@
       'toast.imported': 'State imported successfully.',
       'toast.importFail': 'Could not import: {msg}',
 
+      'hint.scenario': '▶ Scenario loaded. Press <b>Step ▶</b> to run it step by step or <b>Run all ⏩</b> to see it complete: arrows appear when processes request resources.',
+      'hint.noEdges': 'No arrows yet: pick a process and a resource in <b>2 · Operate</b> and press <b>Request</b>, or load a scenario.',
       'tests.ok': 'All tests passed',
       'tests.fail': '{n} test(s) failed',
       'tests.when': 'Run at: {date}',
