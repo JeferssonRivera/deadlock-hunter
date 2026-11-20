@@ -568,3 +568,8 @@ button.btn { font: inherit; font-weight: 700; cursor: pointer; }
 .player-bar .steps li.next { background: var(--gold); border-color: #e0b54a; color: var(--text); }
 .player-bar .lesson { margin-top: 12px; background: #fff; }
 .scenario-list + .hint { margin-top: 8px; }
+/* sin bordes sobrantes en la última fila y la última columna de la ficha */
+@media (min-width: 721px) {
+  .academic-grid .ac-item:not(.ac-wide):nth-last-child(-n+3) { border-bottom: 0; }
+  .academic-grid .ac-item:not(.ac-wide):nth-child(3n+1) { border-right: 0; }
+}
