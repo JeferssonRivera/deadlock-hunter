@@ -369,6 +369,7 @@
     $('sc-steps').innerHTML = sc.steps.map((s, i) =>
       `<li class="${i < index ? 'done' : i === index ? 'next' : ''}">${esc(stepText(s))}</li>`).join('');
     const done = index >= sc.steps.length;
+    $('sc-count').textContent = done ? t('player.done') : t('player.count', { i: index + 1, n: sc.steps.length });
     $('btn-step').disabled = done;
     $('btn-run-all').disabled = done;
     const lesson = $('sc-lesson');
@@ -446,6 +447,10 @@
     player = { sc, index: 0 };
     selectedProc = selectedRes = null;
     refresh();
+    // en pantallas angostas la barra queda debajo de la lista: llevarla a la vista
+    const bar = $('scenario-player');
+    const r = bar.getBoundingClientRect();
+    if (r.top < 0 || r.bottom > window.innerHeight) window.scrollTo({ top: window.scrollY + r.top - 84, behavior: 'instant' });
   }
 
   renderScenarioList();

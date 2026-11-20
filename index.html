@@ -6,7 +6,7 @@
   <title>Deadlock Hunter · Universidad Simón Bolívar</title>
   <meta name="description" content="Simulador académico de interbloqueos (deadlocks) para Sistemas Operativos — Universidad Simón Bolívar, sede Cúcuta.">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/styles.css?v=8">
+  <link rel="stylesheet" href="css/styles.css?v=11">
 </head>
 <body>
   <!--
@@ -99,7 +99,13 @@
         <!-- Panel izquierdo -->
         <aside class="panel left">
           <section class="card">
-            <h3 class="card-title"><span class="num">1</span> <span data-en="Create nodes">Crear nodos</span></h3>
+            <h3 class="card-title"><span class="num">1</span> <span data-en="Scenarios">Escenarios</span></h3>
+            <div id="scenario-list" class="scenario-list"></div>
+            <p class="hint" data-en="Pick one: its controls appear above the graph.">Elige uno: sus controles aparecen encima del grafo.</p>
+          </section>
+
+          <section class="card">
+            <h3 class="card-title"><span class="num">2</span> <span data-en="Create nodes">Crear nodos</span></h3>
             <div class="row">
               <input id="in-proc" placeholder="Nombre (auto: P1…)" data-en-ph="Name (auto: P1…)" maxlength="12">
               <button id="btn-add-proc" data-en="+ Process">+ Proceso</button>
@@ -113,7 +119,7 @@
           </section>
 
           <section class="card">
-            <h3 class="card-title"><span class="num">2</span> <span data-en="Operate">Operar</span></h3>
+            <h3 class="card-title"><span class="num">3</span> <span data-en="Operate">Operar</span></h3>
             <label><span data-en="Process">Proceso</span> <select id="sel-proc"></select></label>
             <label><span data-en="Resource">Recurso</span> <select id="sel-res"></select></label>
             <div class="btn-grid">
@@ -124,25 +130,27 @@
             </div>
             <p class="hint" data-en="Click a node in the graph to select it. Drag it to move it.">Haz clic en un nodo del grafo para seleccionarlo. Arrástralo para moverlo.</p>
           </section>
-
-          <section class="card">
-            <h3 class="card-title"><span class="num">3</span> <span data-en="Scenarios">Escenarios</span></h3>
-            <div id="scenario-list" class="scenario-list"></div>
-            <div id="scenario-player" class="scenario-player" hidden>
-              <h4 id="sc-title"></h4>
-              <p id="sc-desc" class="hint"></p>
-              <ol id="sc-steps" class="steps"></ol>
-              <div class="row">
-                <button id="btn-step" class="primary" data-en="Step ▶">Paso ▶</button>
-                <button id="btn-run-all" data-en="Run all ⏩">Ejecutar todo ⏩</button>
-              </div>
-              <div id="sc-lesson" class="lesson" hidden></div>
-            </div>
-          </section>
         </aside>
 
         <!-- Centro -->
         <section class="panel center">
+          <!-- Barra del escenario: visible sin bajar, justo encima del grafo -->
+          <div id="scenario-player" class="player-bar card" hidden>
+            <div class="player-top">
+              <div class="player-info">
+                <span class="player-kicker" data-en="Scenario">Escenario</span>
+                <h4 id="sc-title"></h4>
+                <p id="sc-desc" class="hint"></p>
+              </div>
+              <div class="player-actions">
+                <span id="sc-count" class="player-count"></span>
+                <button id="btn-step" class="primary" data-en="Step ▶">Paso ▶</button>
+                <button id="btn-run-all" data-en="Run all ⏩">Ejecutar todo ⏩</button>
+              </div>
+            </div>
+            <ol id="sc-steps" class="steps"></ol>
+            <div id="sc-lesson" class="lesson" hidden></div>
+          </div>
           <div id="status" class="status ok">Sin procesos todavía</div>
           <div class="graph-wrap card">
             <svg id="graph" viewBox="0 0 900 560" role="img" aria-label="Grafo de asignación de recursos" data-en-aria="Resource allocation graph">
@@ -407,9 +415,9 @@
     <div id="m-howto">
       <h3 data-en="How to use the simulator">Cómo usar el simulador</h3>
       <ol class="nice-list">
-        <li data-en="<b>Fastest way:</b> in <i>3 · Scenarios</i> choose one and press <b>Step ▶</b> or <b>Run all ⏩</b>.">La forma más rápida: en <i>3 · Escenarios</i> elige uno y pulsa <b>Paso ▶</b> o <b>Ejecutar todo ⏩</b>.</li>
-        <li data-en="<b>By hand:</b> create processes and resources in <i>1 · Create nodes</i>.">A mano: crea procesos y recursos en <i>1 · Crear nodos</i>.</li>
-        <li data-en="Pick a process and a resource in <i>2 · Operate</i> and press <b>Request</b>, <b>Release</b> or <b>Terminate</b>.">Elige un proceso y un recurso en <i>2 · Operar</i> y pulsa <b>Solicitar</b>, <b>Liberar</b> o <b>Finalizar</b>.</li>
+        <li data-en="<b>Fastest way:</b> in <i>1 · Scenarios</i> choose one and press <b>Step ▶</b> or <b>Run all ⏩</b> in the bar above the graph.">La forma más rápida: en <i>1 · Escenarios</i> elige uno y pulsa <b>Paso ▶</b> o <b>Ejecutar todo ⏩</b> en la barra encima del grafo.</li>
+        <li data-en="<b>By hand:</b> create processes and resources in <i>2 · Create nodes</i>.">A mano: crea procesos y recursos en <i>2 · Crear nodos</i>.</li>
+        <li data-en="Pick a process and a resource in <i>3 · Operate</i> and press <b>Request</b>, <b>Release</b> or <b>Terminate</b>.">Elige un proceso y un recurso en <i>3 · Operar</i> y pulsa <b>Solicitar</b>, <b>Liberar</b> o <b>Finalizar</b>.</li>
         <li data-en="Watch the banner: <b>green</b> = no deadlock, <b>yellow</b> = cycle without deadlock, <b>red</b> = deadlock.">Mira el aviso superior: <b>verde</b> = sin bloqueo, <b>amarillo</b> = ciclo sin interbloqueo, <b>rojo</b> = interbloqueo.</li>
         <li data-en="On the right, <i>System analysis</i> explains the cycle and offers recovery options.">A la derecha, <i>Análisis del sistema</i> explica el ciclo y ofrece opciones de recuperación.</li>
       </ol>
@@ -552,11 +560,11 @@ Los Pi con Finish = false están interbloqueados</pre>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <script src="js/i18n.js?v=8"></script>
-  <script src="js/engine.js?v=8"></script>
-  <script src="js/scenarios.js?v=8"></script>
-  <script src="tests/cases.js?v=8"></script>
-  <script src="js/app.js?v=8"></script>
-  <script src="js/site.js?v=8"></script>
+  <script src="js/i18n.js?v=11"></script>
+  <script src="js/engine.js?v=11"></script>
+  <script src="js/scenarios.js?v=11"></script>
+  <script src="tests/cases.js?v=11"></script>
+  <script src="js/app.js?v=11"></script>
+  <script src="js/site.js?v=11"></script>
 </body>
 </html>

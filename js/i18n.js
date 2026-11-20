@@ -127,6 +127,8 @@
       'step.release': '{p} libera {r}',
       'step.terminate': 'Finaliza {p}',
       'lesson.title': '¿Qué ocurrió?',
+      'player.count': 'Paso {i} de {n}',
+      'player.done': '✔ Completado',
       'tag.deadlock': 'BLOQUEO',
       'tag.safe': 'SEGURO',
 
@@ -135,7 +137,7 @@
       'toast.importFail': 'No se pudo importar: {msg}',
 
       'hint.scenario': '▶ Escenario cargado. Pulsa <b>Paso ▶</b> para ejecutarlo paso a paso o <b>Ejecutar todo ⏩</b> para verlo completo: las flechas aparecen cuando los procesos piden recursos.',
-      'hint.noEdges': 'Aún no hay flechas: elige un proceso y un recurso en <b>2 · Operar</b> y pulsa <b>Solicitar</b>, o carga un escenario.',
+      'hint.noEdges': 'Aún no hay flechas: elige un proceso y un recurso en <b>3 · Operar</b> y pulsa <b>Solicitar</b>, o carga un escenario.',
       'tests.ok': 'Todas las pruebas superadas',
       'tests.fail': '{n} prueba(s) fallida(s)',
       'tests.when': 'Ejecutadas: {date}',
@@ -253,6 +255,8 @@
       'step.release': '{p} releases {r}',
       'step.terminate': '{p} terminates',
       'lesson.title': 'What happened?',
+      'player.count': 'Step {i} of {n}',
+      'player.done': '✔ Completed',
       'tag.deadlock': 'DEADLOCK',
       'tag.safe': 'SAFE',
 
@@ -261,7 +265,7 @@
       'toast.importFail': 'Could not import: {msg}',
 
       'hint.scenario': '▶ Scenario loaded. Press <b>Step ▶</b> to run it step by step or <b>Run all ⏩</b> to see it complete: arrows appear when processes request resources.',
-      'hint.noEdges': 'No arrows yet: pick a process and a resource in <b>2 · Operate</b> and press <b>Request</b>, or load a scenario.',
+      'hint.noEdges': 'No arrows yet: pick a process and a resource in <b>3 · Operate</b> and press <b>Request</b>, or load a scenario.',
       'tests.ok': 'All tests passed',
       'tests.fail': '{n} test(s) failed',
       'tests.when': 'Run at: {date}',

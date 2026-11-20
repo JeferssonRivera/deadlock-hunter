@@ -47,7 +47,7 @@ El motor está separado de la interfaz, así que la lógica se puede probar sola
 | Especificación | Implementación |
 |---|---|
 | Representar procesos y recursos en un grafo de asignación | Procesos = círculos; recursos = rectángulos con un punto por instancia (● asignada, ○ libre). Arista **R → P** continua = asignación; arista **P → R** punteada = solicitud en espera. Los nodos se pueden arrastrar. |
-| Solicitar y liberar recursos | Panel *2 · Operar*: **Solicitar**, **Liberar**, **Finalizar proceso**. Si no hay instancias libres, el proceso queda bloqueado en una cola FIFO; al liberar, el recurso pasa automáticamente al primero de la cola. |
+| Solicitar y liberar recursos | Panel *3 · Operar*: **Solicitar**, **Liberar**, **Finalizar proceso**. Si no hay instancias libres, el proceso queda bloqueado en una cola FIFO; al liberar, el recurso pasa automáticamente al primero de la cola. |
 | Detectar ciclos y explicar la posible espera circular | Panel *Análisis*: lista cada ciclo (`P1 → R2 → P2 → R1 → P1`), explica quién espera a quién, indica si es interbloqueo o solo un ciclo, muestra las 4 condiciones de Coffman y la traza del algoritmo de detección. Las aristas del ciclo se pintan de rojo (interbloqueo) o ámbar (ciclo sin interbloqueo). |
 | Simular recuperación (liberar recursos o finalizar un proceso) | Sección *Recuperación*: abortar cualquier proceso del ciclo, expropiar un recurso, o **Recuperación automática**. Cada opción indica cuántos procesos quedarían interbloqueados y la herramienta sugiere la víctima de menor costo. |
 
@@ -102,7 +102,7 @@ La *recuperación automática* repite esto hasta que no queda interbloqueo.
 
 ## 5. Reto de experimentación: con bloqueo vs. sin bloqueo
 
-En el panel *3 · Escenarios* se cargan y se ejecutan paso a paso (**Paso ▶**) o completos (**Ejecutar todo ⏩**). Al terminar se muestra la explicación.
+En el panel *1 · Escenarios* se cargan; se ejecutan paso a paso (**Paso ▶**) o completos (**Ejecutar todo ⏩**) desde la barra que aparece encima del grafo. Al terminar se muestra la explicación.
 
 | | Con bloqueo: *interbloqueo clásico* | Sin bloqueo: *orden global de recursos* |
 |---|---|---|

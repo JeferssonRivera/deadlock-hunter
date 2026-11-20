@@ -549,3 +549,22 @@ button.btn { font: inherit; font-weight: 700; cursor: pointer; }
 .panel button.attention { animation: attention 1.4s ease-in-out infinite; }
 @keyframes attention { 0%, 100% { box-shadow: 0 0 0 0 rgba(0, 132, 61, .55); } 60% { box-shadow: 0 0 0 7px rgba(0, 132, 61, 0); } }
 @media (max-width: 600px) { .graph-hint { font-size: 12.5px; padding: 9px 12px; bottom: 8px; } }
+
+/* ---------- barra del escenario (encima del grafo) ---------- */
+.player-bar { border: 2px solid var(--green); background: var(--green-soft); padding: 14px 16px; }
+.player-bar[hidden] { display: none; }
+.player-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; flex-wrap: wrap; }
+.player-info { flex: 1 1 260px; min-width: 0; }
+.player-kicker { font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--green); }
+.player-bar h4 { margin: 2px 0 2px; font-size: 16px; color: var(--green-darker); }
+.player-bar .hint { margin: 0; }
+.player-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.player-count { font-size: 12.5px; font-weight: 700; color: var(--green-dark); background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; white-space: nowrap; }
+.player-bar .steps { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 12px 0 0; counter-reset: step; }
+.player-bar .steps li { counter-increment: step; background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px; font-size: 12px; }
+.player-bar .steps li::before { content: counter(step) ". "; font-weight: 700; color: var(--muted); }
+.player-bar .steps li.done { background: var(--green-light); border-color: var(--green-mid); text-decoration: none; color: var(--green-darker); }
+.player-bar .steps li.done::before { content: "✔ "; color: var(--green); }
+.player-bar .steps li.next { background: var(--gold); border-color: #e0b54a; color: var(--text); }
+.player-bar .lesson { margin-top: 12px; background: #fff; }
+.scenario-list + .hint { margin-top: 8px; }
